@@ -22,7 +22,7 @@ from torch_geometric.transforms import LocalCartesian, Cartesian, Polar
 pd.options.mode.chained_assignment = None
 
 def false_graph_filtering(distance_thresh):
-    root_dir = './Sample_data_for_demo/Graph_test/'
+    root_dir = '../Sample_data_for_demo/Graph_test/'
     origin_file_dir = root_dir
 
     different_value = 0

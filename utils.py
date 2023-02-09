@@ -11,6 +11,7 @@ from tqdm import tqdm
 from torch_geometric.nn import GATConv as GATConv_v1
 from torch_geometric.nn import GATv2Conv as GATConv
 
+
 def weight_init(m):
     '''
     Usage:
@@ -78,8 +79,8 @@ def weight_init(m):
             else:
                 init.normal_(param.data)
 
-def non_decay_filter(model):
 
+def non_decay_filter(model):
     no_decay = list()
     decay = list()
 
@@ -117,8 +118,8 @@ def non_decay_filter(model):
 
     return model_parameter_groups
 
-def metadata_list_generation(DatasetType, Trainlist, Metadata):
 
+def metadata_list_generation(DatasetType, Trainlist, Metadata):
     Train_survivallist = []
     Train_censorlist = []
     Train_stagelist = []
@@ -243,9 +244,10 @@ def metadata_list_generation(DatasetType, Trainlist, Metadata):
 
     return Trainlist, Train_survivallist, Train_censorlist, Train_stagelist
 
-def train_test_split(Trainlist, Metadata, DatasetType, TrainRoot, Fi, Analyze_flag=False):
 
-    Trainlist, Train_survivallist, Train_censorlist, Train_stagelist = metadata_list_generation(DatasetType, Trainlist, Metadata)
+def train_test_split(Trainlist, Metadata, DatasetType, TrainRoot, Fi, Analyze_flag=False):
+    Trainlist, Train_survivallist, Train_censorlist, Train_stagelist = metadata_list_generation(DatasetType, Trainlist,
+                                                                                                Metadata)
 
     Train_not_eventlist = np.where(np.array(Train_censorlist) == 0)[0]
     Train_not_eventlist = [item for c, item in enumerate(Train_not_eventlist)]
@@ -254,7 +256,8 @@ def train_test_split(Trainlist, Metadata, DatasetType, TrainRoot, Fi, Analyze_fl
 
     Wholelist = [os.path.join(TrainRoot, item) for item in Trainlist]
 
-    Train_noncensor_survivallist = np.array(Train_survivallist)[Train_not_eventlist[0:int(len(Train_not_eventlist) * 0.8)]]
+    Train_noncensor_survivallist = np.array(Train_survivallist)[
+        Train_not_eventlist[0:int(len(Train_not_eventlist) * 0.8)]]
     Train_noncensor_survivallist = Train_noncensor_survivallist.tolist()
     Train_censor_survivallist = np.array(Train_survivallist)[Train_eventlist[0:int(len(Train_eventlist) * 0.8)]]
     Train_censor_survivallist = Train_censor_survivallist.tolist()
@@ -274,37 +277,63 @@ def train_test_split(Trainlist, Metadata, DatasetType, TrainRoot, Fi, Analyze_fl
     Trainlist_censor = np.array(Wholelist)[Train_eventlist[0:int(len(Train_eventlist) * 0.8)]]
     Trainlist_censor = Trainlist_censor.tolist()
 
-    Test_noncensor_survivallist = np.array(Train_survivallist)[Train_not_eventlist[int(len(Train_not_eventlist) * 0.8):len(Train_not_eventlist)]]
-    Test_censor_survivallist = np.array(Train_survivallist)[Train_eventlist[int(len(Train_eventlist) * 0.8):len(Train_eventlist)]]
+    Test_noncensor_survivallist = np.array(Train_survivallist)[
+        Train_not_eventlist[int(len(Train_not_eventlist) * 0.8):len(Train_not_eventlist)]]
+    Test_censor_survivallist = np.array(Train_survivallist)[
+        Train_eventlist[int(len(Train_eventlist) * 0.8):len(Train_eventlist)]]
     Test_survivallist = Test_noncensor_survivallist.tolist() + Test_censor_survivallist.tolist()
 
-    Test_noncensor_stagelist = np.array(Train_stagelist)[Train_not_eventlist[int(len(Train_not_eventlist) * 0.8):len(Train_not_eventlist)]]
-    Test_censor_stagelist = np.array(Train_stagelist)[Train_eventlist[int(len(Train_eventlist) * 0.8):len(Train_eventlist)]]
+    Test_noncensor_stagelist = np.array(Train_stagelist)[
+        Train_not_eventlist[int(len(Train_not_eventlist) * 0.8):len(Train_not_eventlist)]]
+    Test_censor_stagelist = np.array(Train_stagelist)[
+        Train_eventlist[int(len(Train_eventlist) * 0.8):len(Train_eventlist)]]
     Test_stagelist = Test_noncensor_stagelist.tolist() + Test_censor_stagelist.tolist()
 
-    Test_noncensor_censorlist = np.array(Train_censorlist)[Train_not_eventlist[int(len(Train_not_eventlist) * 0.8):len(Train_not_eventlist)]]
-    Test_censor_censorlist = np.array(Train_censorlist)[Train_eventlist[int(len(Train_eventlist) * 0.8):len(Train_eventlist)]]
+    Test_noncensor_censorlist = np.array(Train_censorlist)[
+        Train_not_eventlist[int(len(Train_not_eventlist) * 0.8):len(Train_not_eventlist)]]
+    Test_censor_censorlist = np.array(Train_censorlist)[
+        Train_eventlist[int(len(Train_eventlist) * 0.8):len(Train_eventlist)]]
     Test_censorlist = Test_noncensor_censorlist.tolist() + Test_censor_censorlist.tolist()
 
-    Testlist_noncensor = np.array(Wholelist)[Train_not_eventlist[int(len(Train_not_eventlist) * 0.8):len(Train_not_eventlist)]]
+    Testlist_noncensor = np.array(Wholelist)[
+        Train_not_eventlist[int(len(Train_not_eventlist) * 0.8):len(Train_not_eventlist)]]
     Testlist_censor = np.array(Wholelist)[Train_eventlist[int(len(Train_eventlist) * 0.8):len(Train_eventlist)]]
     Testlist = Testlist_noncensor.tolist() + Testlist_censor.tolist()
 
     TrainFF = np.array(
-        Trainlist_noncensor[0:Fi * int(len(Trainlist_noncensor) / 5)] + Trainlist_noncensor[(Fi + 1) * int(len(Trainlist_noncensor) / 5):len(Trainlist_noncensor)]\
-        + Trainlist_censor[0:Fi * int(len(Trainlist_censor) / 5)] + Trainlist_censor[(Fi + 1) * int(len(Trainlist_censor) / 5):len(Trainlist_censor)])
+        Trainlist_noncensor[0:Fi * int(len(Trainlist_noncensor) / 5)] + Trainlist_noncensor[(Fi + 1) * int(
+            len(Trainlist_noncensor) / 5):len(Trainlist_noncensor)] \
+        + Trainlist_censor[0:Fi * int(len(Trainlist_censor) / 5)] + Trainlist_censor[
+                                                                    (Fi + 1) * int(len(Trainlist_censor) / 5):len(
+                                                                        Trainlist_censor)])
 
     TrainFF_survivallist = \
-        Train_noncensor_survivallist[0:Fi * int(len(Train_noncensor_survivallist) / 5)] + Train_noncensor_survivallist[(Fi + 1) * int(len(Train_noncensor_survivallist) / 5):len(Train_noncensor_survivallist)]\
-        + Train_censor_survivallist[0:Fi * int(len(Train_censor_survivallist) / 5)] + Train_censor_survivallist[(Fi + 1) * int(len(Train_censor_survivallist) / 5):len(Train_censor_survivallist)]
+        Train_noncensor_survivallist[0:Fi * int(len(Train_noncensor_survivallist) / 5)] + Train_noncensor_survivallist[
+                                                                                          (Fi + 1) * int(
+                                                                                              len(Train_noncensor_survivallist) / 5):len(
+                                                                                              Train_noncensor_survivallist)] \
+        + Train_censor_survivallist[0:Fi * int(len(Train_censor_survivallist) / 5)] + Train_censor_survivallist[
+                                                                                      (Fi + 1) * int(
+                                                                                          len(Train_censor_survivallist) / 5):len(
+                                                                                          Train_censor_survivallist)]
 
     TrainFF_stagelist = \
-        Train_noncensor_stagelist[0:Fi * int(len(Train_noncensor_stagelist) / 5)] + Train_noncensor_stagelist[(Fi + 1) * int(len(Train_noncensor_stagelist) / 5):len(Train_noncensor_stagelist)]\
-        + Train_censor_stagelist[0:Fi * int(len(Train_censor_stagelist) / 5)] + Train_censor_stagelist[(Fi + 1) * int(len(Train_censor_stagelist) / 5):len(Train_censor_stagelist)]
+        Train_noncensor_stagelist[0:Fi * int(len(Train_noncensor_stagelist) / 5)] + Train_noncensor_stagelist[
+                                                                                    (Fi + 1) * int(
+                                                                                        len(Train_noncensor_stagelist) / 5):len(
+                                                                                        Train_noncensor_stagelist)] \
+        + Train_censor_stagelist[0:Fi * int(len(Train_censor_stagelist) / 5)] + Train_censor_stagelist[(Fi + 1) * int(
+            len(Train_censor_stagelist) / 5):len(Train_censor_stagelist)]
 
     TrainFF_censorlist = \
-        Train_noncensor_censorlist[0:Fi * int(len(Train_noncensor_censorlist) / 5)] + Train_noncensor_censorlist[(Fi + 1) * int(len(Train_noncensor_censorlist) / 5):len(Train_noncensor_censorlist)]\
-        + Train_censor_censorlist[0:Fi * int(len(Train_censor_censorlist) / 5)] + Train_censor_censorlist[(Fi + 1) * int(len(Train_censor_censorlist) / 5):len(Train_censor_censorlist)]
+        Train_noncensor_censorlist[0:Fi * int(len(Train_noncensor_censorlist) / 5)] + Train_noncensor_censorlist[
+                                                                                      (Fi + 1) * int(
+                                                                                          len(Train_noncensor_censorlist) / 5):len(
+                                                                                          Train_noncensor_censorlist)] \
+        + Train_censor_censorlist[0:Fi * int(len(Train_censor_censorlist) / 5)] + Train_censor_censorlist[
+                                                                                  (Fi + 1) * int(
+                                                                                      len(Train_censor_censorlist) / 5):len(
+                                                                                      Train_censor_censorlist)]
 
     ValidFF = np.array(
         Trainlist_noncensor[Fi * int(len(Trainlist_noncensor) / 5):(Fi + 1) * int(len(Trainlist_noncensor) / 5)]
@@ -321,7 +350,8 @@ def train_test_split(Trainlist, Metadata, DatasetType, TrainRoot, Fi, Analyze_fl
                           Fi * int(len(Train_censor_stagelist) / 5):(Fi + 1) * int(len(Train_censor_stagelist) / 5)]
 
     ValidFF_censorlist = Train_noncensor_censorlist[
-                         Fi * int(len(Train_noncensor_censorlist) / 5):(Fi + 1) * int(len(Train_noncensor_censorlist) / 5)] \
+                         Fi * int(len(Train_noncensor_censorlist) / 5):(Fi + 1) * int(
+                             len(Train_noncensor_censorlist) / 5)] \
                          + Train_censor_censorlist[
                            Fi * int(len(Train_censor_censorlist) / 5):(Fi + 1) * int(len(Train_censor_censorlist) / 5)]
 
@@ -331,13 +361,14 @@ def train_test_split(Trainlist, Metadata, DatasetType, TrainRoot, Fi, Analyze_fl
 
     if Analyze_flag == True:
         Test_set = (np.array(TrainFF.tolist() + ValidFF.tolist() + Testlist),
-                    TrainFF_survivallist + ValidFF_survivallist + Test_survivallist, 
-                    TrainFF_censorlist + ValidFF_censorlist + Test_censorlist, 
+                    TrainFF_survivallist + ValidFF_survivallist + Test_survivallist,
+                    TrainFF_censorlist + ValidFF_censorlist + Test_censorlist,
                     TrainFF_stagelist + ValidFF_stagelist + Test_stagelist)
         return Test_set
 
     else:
         return TrainFF_set, ValidFF_set, Test_set
+
 
 def makecheckpoint_dir_graph(Argument):
     todaydata = datetime.datetime.now(pytz.timezone('Asia/Seoul')).strftime("%Y-%m-%d_%H:%M:%S")
@@ -353,14 +384,14 @@ def makecheckpoint_dir_graph(Argument):
 
     return checkpoint_dir, figure_dir
 
+
 class coxph_loss(torch.nn.Module):
 
     def __init__(self):
         super(coxph_loss, self).__init__()
 
     def forward(self, risk, phase, censors):
-
-        #riskmax = risk
+        # riskmax = risk
         riskmax = F.normalize(risk, p=2, dim=0)
 
         log_risk = torch.log((torch.cumsum(torch.exp(riskmax), dim=0)))
@@ -370,9 +401,10 @@ class coxph_loss(torch.nn.Module):
         censored_likelihood = torch.mul(uncensored_likelihood, resize_censors)
 
         loss = -torch.sum(censored_likelihood) / float(censors.nonzero().size(0))
-        #loss = -torch.sum(censored_likelihood) / float(censors.size(0))
+        # loss = -torch.sum(censored_likelihood) / float(censors.size(0))
 
         return loss
+
 
 def accuracytest(survivals, risk, censors):
     survlist = []
@@ -392,6 +424,7 @@ def accuracytest(survivals, risk, censors):
 
     return C_value
 
+
 def TrainValid_path(DatasetType):
     Pretrain_root = 0
 
@@ -404,9 +437,9 @@ def TrainValid_path(DatasetType):
 
     return Pretrain_root
 
+
 def cox_sort(out, tempsurvival, tempphase, tempmeta, tempstage, tempID,
              EpochSurv, EpochPhase, EpochRisk, EpochStage, EpochID):
-
     sort_idx = torch.argsort(tempsurvival, descending=True)
     updated_feature_list = []
 
@@ -432,4 +465,3 @@ def cox_sort(out, tempsurvival, tempphase, tempmeta, tempstage, tempID,
         EpochStage.append(stageval.cpu().detach().item())
 
     return risklist, tempsurvival, tempphase, tempmeta, EpochSurv, EpochPhase, EpochRisk, EpochStage
-

@@ -2,6 +2,7 @@ import torch.nn.init as init
 import torch.nn as nn
 from torch.nn import ReLU, SELU, PReLU, GELU, ELU, LeakyReLU
 
+
 def weight_init(m):
     '''
     Usage:
@@ -69,8 +70,8 @@ def weight_init(m):
             else:
                 init.normal_(param.data)
 
-def decide_loss_type(loss_type, dim):
 
+def decide_loss_type(loss_type, dim):
     if loss_type == "RELU":
         loss_fun = ReLU()
     if loss_type == "Leaky":

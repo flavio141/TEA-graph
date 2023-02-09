@@ -10,7 +10,7 @@ from torch_geometric.nn import GraphSizeNorm
 from torch_sparse import set_diag
 
 from models.model_utils import weight_init
-from model_utils import decide_loss_type
+from models.model_utils import decide_loss_type
 
 class BasicLinear_module(torch.nn.Module):
 

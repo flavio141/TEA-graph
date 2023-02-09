@@ -28,6 +28,7 @@ from utils import accuracytest
 
 from torch.utils.data.sampler import Sampler
 
+
 class Sampler_custom(Sampler):
 
     def __init__(self, event_list, censor_list, batch_size):
@@ -58,9 +59,9 @@ class Sampler_custom(Sampler):
             (Censored_idx.shape[0] // (self.batch_size - 2)), (self.batch_size - 2)), replace=False)
 
         if Event_idx_selected.shape[0] > Censored_idx_selected.shape[0]:
-            Event_idx_selected = Event_idx_selected[:Censored_idx_selected.shape[0],:]
+            Event_idx_selected = Event_idx_selected[:Censored_idx_selected.shape[0], :]
         else:
-            Censored_idx_selected = Censored_idx_selected[:Event_idx_selected.shape[0],:]
+            Censored_idx_selected = Censored_idx_selected[:Event_idx_selected.shape[0], :]
 
         for c in range(Event_idx_selected.shape[0]):
             train_batch_sampler.append(
@@ -71,9 +72,11 @@ class Sampler_custom(Sampler):
     def __len__(self):
         return len(self.event_list) // 2
 
+
 class CoxGraphDataset(Dataset):
 
-    def __init__(self, filelist, survlist, stagelist, censorlist, Metadata, mode, model, transform=None, pre_transform=None):
+    def __init__(self, filelist, survlist, stagelist, censorlist, Metadata, mode, model, transform=None,
+                 pre_transform=None):
         super(CoxGraphDataset, self).__init__()
         self.filelist = filelist
         self.survlist = survlist
@@ -100,9 +103,9 @@ class CoxGraphDataset(Dataset):
         phase = self.censorlist[idx]
         stage = self.stagelist[idx]
 
-        data_re = Data(x=data_origin.x[:,:1792], edge_index=data_origin.edge_index)
+        data_re = Data(x=data_origin.x[:, :1792], edge_index=data_origin.edge_index)
 
-        mock_data = Data(x=data_origin.x[:,:1792], edge_index=data_origin.edge_index, pos=data_origin.pos)
+        mock_data = Data(x=data_origin.x[:, :1792], edge_index=data_origin.edge_index, pos=data_origin.pos)
 
         data_re.pos = data_origin.pos
         data_re_polar = self.polar_transform(mock_data)
@@ -123,8 +126,8 @@ class CoxGraphDataset(Dataset):
 
         return data
 
-def Train(Argument):
 
+def Train(Argument):
     checkpoint_dir, Figure_dir = mcd(Argument)
 
     batch_num = int(Argument.batch_size)
@@ -156,10 +159,10 @@ def Train(Argument):
 
     torch.manual_seed(12345)
     test_loader = DataListLoader(TestDataset, batch_size=batch_num, shuffle=True, num_workers=8, pin_memory=True,
-                             drop_last=False)
+                                 drop_last=False)
     train_loader = DataListLoader(TrainDataset, batch_sampler=train_batch_sampler, num_workers=8, pin_memory=True)
     val_loader = DataListLoader(ValidDataset, batch_size=batch_num, shuffle=True, num_workers=8, pin_memory=True,
-                            drop_last=False)
+                                drop_last=False)
 
     model = model_selection(Argument)
     model_parameter_groups = non_decay_filter(model)
@@ -182,7 +185,7 @@ def Train(Argument):
 
     loader = {'train': train_loader, 'val': val_loader, 'test': test_loader}
 
-    BestAccDict = {'train': 0, 'val': 0, 'test':0}
+    BestAccDict = {'train': 0, 'val': 0, 'test': 0}
     AccHistory = {'train': [], 'val': [], 'test': []}
     LossHistory = {'train': [], 'val': [], 'test': []}
     RiskAccHistory = {'train': [], 'val': [], 'test': []}
@@ -253,8 +256,12 @@ def Train(Argument):
 
                             if mode == 'train':
                                 loss.backward()
-                                torch.nn.utils.clip_grad_norm_(model_parameter_groups[0]['params'], max_norm=Argument.clip_grad_norm_value, error_if_nonfinite=True)
-                                torch.nn.utils.clip_grad_norm_(model_parameter_groups[1]['params'], max_norm=Argument.clip_grad_norm_value, error_if_nonfinite=True)
+                                torch.nn.utils.clip_grad_norm_(model_parameter_groups[0]['params'],
+                                                               max_norm=Argument.clip_grad_norm_value,
+                                                               error_if_nonfinite=True)
+                                torch.nn.utils.clip_grad_norm_(model_parameter_groups[1]['params'],
+                                                               max_norm=Argument.clip_grad_norm_value,
+                                                               error_if_nonfinite=True)
                                 optimizer_ft.step()
                                 scheduler.step()
 
@@ -269,11 +276,9 @@ def Train(Argument):
                             final_updated_feature_list = []
                             updated_feature_list = []
 
-
                     Epochacc = accuracytest(torch.tensor(EpochSurv), torch.tensor(EpochRisk),
                                             torch.tensor(EpochPhase))
                     Epochloss = Epochloss / batchcounter
-
 
                     if mode == 'train':
                         if Epochacc > BestAccDict['train']:
