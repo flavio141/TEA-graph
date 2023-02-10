@@ -12,6 +12,7 @@ from torch_sparse import set_diag
 from models.model_utils import weight_init
 from models.model_utils import decide_loss_type
 
+
 class BasicLinear_module(torch.nn.Module):
 
     def __init__(self, in_f, out_f, dropout_rate, norm_type):
@@ -55,6 +56,7 @@ class BasicLinear_module(torch.nn.Module):
 
         return out_x
 
+
 class preprocess(torch.nn.Module):
 
     def __init__(self, argument):
@@ -63,14 +65,14 @@ class preprocess(torch.nn.Module):
         prelayerpreset = [800, 400, argument.attention_head_num * argument.initial_dim]
         self.prelayernum = []
         self.prelayernum.append(1792)
-        for i in range(0, argument.MLP_layernum -1):
+        for i in range(0, argument.MLP_layernum - 1):
             self.prelayernum.append(prelayerpreset[i])
 
         dropout_rate = argument.dropout_rate
         norm_type = argument.norm_type
 
         self.prelayer_blocks = nn.ModuleList([BasicLinear_module(in_f, out_f, dropout_rate, norm_type)
-                           for in_f, out_f in zip(self.prelayernum, self.prelayernum[1:])])
+                                              for in_f, out_f in zip(self.prelayernum, self.prelayernum[1:])])
 
         self.prelayer_last = Linear(self.prelayernum[-1], argument.attention_head_num * argument.initial_dim)
         self.edge_position_embedding = nn.Embedding(11, 100)

@@ -21,6 +21,7 @@ from torch_geometric.transforms import LocalCartesian, Cartesian, Polar
 
 pd.options.mode.chained_assignment = None
 
+
 def false_graph_filtering(distance_thresh):
     root_dir = '../Sample_data_for_demo/Graph_test/'
     origin_file_dir = root_dir
@@ -32,10 +33,13 @@ def false_graph_filtering(distance_thresh):
     original_file_list = []
     for file in supernode_sample:
         if os.path.isfile(os.path.join(root_dir, file)):
-            original_file_list.append(file.split('_')[0] + '_' + file.split('_')[1] + '_' + file.split('_')[2] + '_' + file.split('_')[3] + '_' + file.split('_')[4])
+            original_file_list.append(
+                file.split('_')[0] + '_' + file.split('_')[1] + '_' + file.split('_')[2] + '_' + file.split('_')[
+                    3] + '_' + file.split('_')[4])
     sample_files = list(set(original_file_list))
 
-    supernode_files = [os.path.join(origin_file_dir, item + '_' + str(different_value) + '.csv') for item in sample_files]
+    supernode_files = [os.path.join(origin_file_dir, item + '_' + str(different_value) + '.csv') for item in
+                       sample_files]
 
     pt_files = []
     for item in sample_files:
@@ -43,16 +47,16 @@ def false_graph_filtering(distance_thresh):
             pt_files.append(os.path.join(root_dir, item + '_' + str(different_value) + '_graph_torch_new.pt'))
         else:
             if os.path.isfile(os.path.join(root_dir, item + '_' + str(different_value) + '_graph_torch.pt')):
-                pt_files.append(os.path.join(root_dir, item + '_' + str(different_value) +'_graph_torch.pt'))
+                pt_files.append(os.path.join(root_dir, item + '_' + str(different_value) + '_graph_torch.pt'))
             else:
                 pt_files.append('pass')
-
 
     with tqdm(total=len(pt_files)) as pbar:
         for sample_name, supernode_path, pt in zip(sample_files, supernode_files, pt_files):
 
-            if not os.path.isfile(os.path.join(root_dir, sample_name + "_" + str(different_value) + "_graph_torch_" + str(
-                distance_thresh) + "_artifact_sophis_final.pt")):
+            if not os.path.isfile(
+                    os.path.join(root_dir, sample_name + "_" + str(different_value) + "_graph_torch_" + str(
+                            distance_thresh) + "_artifact_sophis_final.pt")):
 
                 if 'pass' not in pt:
 
@@ -130,7 +134,8 @@ def false_graph_filtering(distance_thresh):
                         new_supernode = supernode.iloc[connected_graph]
                         new_supernode = new_supernode.reset_index()
                         # new_supernode = new_supernode.reindex([item[1] for item in new_node_order_dict.items()])
-                        new_supernode.to_csv(supernode_path.split('.csv')[0] + '_' + str(distance_thresh) + '_artifact_sophis_final.csv')
+                        new_supernode.to_csv(
+                            supernode_path.split('.csv')[0] + '_' + str(distance_thresh) + '_artifact_sophis_final.csv')
 
                         actual_pos = location.iloc[new_supernode['Unnamed: 0']]
                         actual_pos = actual_pos[['X', 'Y']].to_numpy()
@@ -141,7 +146,8 @@ def false_graph_filtering(distance_thresh):
                         new_graph = Data(x=new_feature, edge_index=new_edge_index, pos=actual_pos * 256.0)
                         new_graph = pos_transfrom(new_graph)
 
-                        torch.save(new_graph, os.path.join(root_dir, sample_name + "_" + str(different_value) +"_graph_torch_" + str(
+                        torch.save(new_graph, os.path.join(root_dir, sample_name + "_" + str(
+                            different_value) + "_graph_torch_" + str(
                             distance_thresh) + "_artifact_sophis_final.pt"))
 
             pbar.update()
