@@ -23,7 +23,7 @@ def Parser_main():
     parser.add_argument("--initial_dim", default=100, help="Initial dimension for the GAT", type=int)
     parser.add_argument("--attention_head_num", default=2, help="Number of attention heads for GAT", type=int)
     parser.add_argument("--number_of_layers", default=3, help="Whole number of layer of GAT", type=int)
-    parser.add_argument("--FF_number", default=0, help="Selecting set for the five fold cross validation", type=int)
+    parser.add_argument("--FF_number", default=1, help="Selecting set for the five fold cross validation", type=int)
     parser.add_argument("--model", default="GAT_custom", help="GAT_custom/DeepGraphConv/PatchGCN/GIN/MIL/MIL-attention",
                         type=str)
     parser.add_argument("--gpu", default=0, help="Target gpu for calculating loss value", type=int)

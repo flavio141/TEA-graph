@@ -3,6 +3,7 @@
 import os
 import copy
 import torch
+import shutil
 import torch_geometric.transforms as T
 import pandas as pd
 import numpy as np
@@ -134,8 +135,14 @@ def Train(Argument):
     device = torch.device(int(Argument.gpu))
     Metadata = pd.read_csv('./Sample_data_for_demo/Metadata/KIRC_clinical.tsv', sep='\t')
     TrainRoot = TrainValid_path(Argument.DatasetType)
+    if os.listdir("./Sample_data_for_demo/Graph_test/TCGA/KIRC/superpatch"):
+        files = os.listdir("./Sample_data_for_demo/Graph_test/TCGA/KIRC/superpatch")
+        for file in files:
+            shutil.move(os.path.join("./Sample_data_for_demo/Graph_test/TCGA/KIRC/superpatch", file),
+                        "./Sample_data_for_demo/Graphdata/KIRC")
+
     Trainlist = os.listdir(TrainRoot)
-    Trainlist = [item for c, item in enumerate(Trainlist) if '0_graph_torch_4.3_artifact_sophis_final.pt' in item]
+    Trainlist = [item for c, item in enumerate(Trainlist) if 'graph_torch' in item]
     Fi = Argument.FF_number
 
     TrainFF_set, ValidFF_set, Test_set = train_test_split(Trainlist, Metadata, Argument.DatasetType, TrainRoot, Fi)

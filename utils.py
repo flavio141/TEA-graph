@@ -248,7 +248,7 @@ def metadata_list_generation(DatasetType, Trainlist, Metadata):
 def train_test_split(Trainlist, Metadata, DatasetType, TrainRoot, Fi, Analyze_flag=False):
     Trainlist, Train_survivallist, Train_censorlist, Train_stagelist = metadata_list_generation(DatasetType, Trainlist,
                                                                                                 Metadata)
-
+    split_percentage = 0.8
     Train_not_eventlist = np.where(np.array(Train_censorlist) == 0)[0]
     Train_not_eventlist = [item for c, item in enumerate(Train_not_eventlist)]
     Train_eventlist = np.where(np.array(Train_censorlist) == 1)[0]
@@ -257,47 +257,47 @@ def train_test_split(Trainlist, Metadata, DatasetType, TrainRoot, Fi, Analyze_fl
     Wholelist = [os.path.join(TrainRoot, item) for item in Trainlist]
 
     Train_noncensor_survivallist = np.array(Train_survivallist)[
-        Train_not_eventlist[0:int(len(Train_not_eventlist) * 0.8)]]
+        Train_not_eventlist[0:int(len(Train_not_eventlist) * split_percentage)]]
     Train_noncensor_survivallist = Train_noncensor_survivallist.tolist()
-    Train_censor_survivallist = np.array(Train_survivallist)[Train_eventlist[0:int(len(Train_eventlist) * 0.8)]]
+    Train_censor_survivallist = np.array(Train_survivallist)[Train_eventlist[0:int(len(Train_eventlist) * split_percentage)]]
     Train_censor_survivallist = Train_censor_survivallist.tolist()
 
-    Train_noncensor_stagelist = np.array(Train_stagelist)[Train_not_eventlist[0:int(len(Train_not_eventlist) * 0.8)]]
+    Train_noncensor_stagelist = np.array(Train_stagelist)[Train_not_eventlist[0:int(len(Train_not_eventlist) * split_percentage)]]
     Train_noncensor_stagelist = Train_noncensor_stagelist.tolist()
-    Train_censor_stagelist = np.array(Train_stagelist)[Train_eventlist[0:int(len(Train_eventlist) * 0.8)]]
+    Train_censor_stagelist = np.array(Train_stagelist)[Train_eventlist[0:int(len(Train_eventlist) * split_percentage)]]
     Train_censor_stagelist = Train_censor_stagelist.tolist()
 
-    Train_noncensor_censorlist = np.array(Train_censorlist)[Train_not_eventlist[0:int(len(Train_not_eventlist) * 0.8)]]
+    Train_noncensor_censorlist = np.array(Train_censorlist)[Train_not_eventlist[0:int(len(Train_not_eventlist) * split_percentage)]]
     Train_noncensor_censorlist = Train_noncensor_censorlist.tolist()
-    Train_censor_censorlist = np.array(Train_censorlist)[Train_eventlist[0:int(len(Train_eventlist) * 0.8)]]
+    Train_censor_censorlist = np.array(Train_censorlist)[Train_eventlist[0:int(len(Train_eventlist) * split_percentage)]]
     Train_censor_censorlist = Train_censor_censorlist.tolist()
 
-    Trainlist_noncensor = np.array(Wholelist)[Train_not_eventlist[0:int(len(Train_not_eventlist) * 0.8)]]
+    Trainlist_noncensor = np.array(Wholelist)[Train_not_eventlist[0:int(len(Train_not_eventlist) * split_percentage)]]
     Trainlist_noncensor = Trainlist_noncensor.tolist()
-    Trainlist_censor = np.array(Wholelist)[Train_eventlist[0:int(len(Train_eventlist) * 0.8)]]
+    Trainlist_censor = np.array(Wholelist)[Train_eventlist[0:int(len(Train_eventlist) * split_percentage)]]
     Trainlist_censor = Trainlist_censor.tolist()
 
     Test_noncensor_survivallist = np.array(Train_survivallist)[
-        Train_not_eventlist[int(len(Train_not_eventlist) * 0.8):len(Train_not_eventlist)]]
+        Train_not_eventlist[int(len(Train_not_eventlist) * split_percentage):len(Train_not_eventlist)]]
     Test_censor_survivallist = np.array(Train_survivallist)[
-        Train_eventlist[int(len(Train_eventlist) * 0.8):len(Train_eventlist)]]
+        Train_eventlist[int(len(Train_eventlist) * split_percentage):len(Train_eventlist)]]
     Test_survivallist = Test_noncensor_survivallist.tolist() + Test_censor_survivallist.tolist()
 
     Test_noncensor_stagelist = np.array(Train_stagelist)[
-        Train_not_eventlist[int(len(Train_not_eventlist) * 0.8):len(Train_not_eventlist)]]
+        Train_not_eventlist[int(len(Train_not_eventlist) * split_percentage):len(Train_not_eventlist)]]
     Test_censor_stagelist = np.array(Train_stagelist)[
-        Train_eventlist[int(len(Train_eventlist) * 0.8):len(Train_eventlist)]]
+        Train_eventlist[int(len(Train_eventlist) * split_percentage):len(Train_eventlist)]]
     Test_stagelist = Test_noncensor_stagelist.tolist() + Test_censor_stagelist.tolist()
 
     Test_noncensor_censorlist = np.array(Train_censorlist)[
-        Train_not_eventlist[int(len(Train_not_eventlist) * 0.8):len(Train_not_eventlist)]]
+        Train_not_eventlist[int(len(Train_not_eventlist) * split_percentage):len(Train_not_eventlist)]]
     Test_censor_censorlist = np.array(Train_censorlist)[
-        Train_eventlist[int(len(Train_eventlist) * 0.8):len(Train_eventlist)]]
+        Train_eventlist[int(len(Train_eventlist) * split_percentage):len(Train_eventlist)]]
     Test_censorlist = Test_noncensor_censorlist.tolist() + Test_censor_censorlist.tolist()
 
     Testlist_noncensor = np.array(Wholelist)[
-        Train_not_eventlist[int(len(Train_not_eventlist) * 0.8):len(Train_not_eventlist)]]
-    Testlist_censor = np.array(Wholelist)[Train_eventlist[int(len(Train_eventlist) * 0.8):len(Train_eventlist)]]
+        Train_not_eventlist[int(len(Train_not_eventlist) * split_percentage):len(Train_not_eventlist)]]
+    Testlist_censor = np.array(Wholelist)[Train_eventlist[int(len(Train_eventlist) * split_percentage):len(Train_eventlist)]]
     Testlist = Testlist_noncensor.tolist() + Testlist_censor.tolist()
 
     TrainFF = np.array(
@@ -359,7 +359,7 @@ def train_test_split(Trainlist, Metadata, DatasetType, TrainRoot, Fi, Analyze_fl
     ValidFF_set = (ValidFF, ValidFF_survivallist, ValidFF_censorlist, ValidFF_stagelist)
     Test_set = (Testlist, Test_survivallist, Test_censorlist, Test_stagelist)
 
-    if Analyze_flag == True:
+    if Analyze_flag:
         Test_set = (np.array(TrainFF.tolist() + ValidFF.tolist() + Testlist),
                     TrainFF_survivallist + ValidFF_survivallist + Test_survivallist,
                     TrainFF_censorlist + ValidFF_censorlist + Test_censorlist,
