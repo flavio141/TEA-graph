@@ -175,7 +175,7 @@ def Train(Argument):
     model = model_selection(Argument)
     model_parameter_groups = non_decay_filter(model)
 
-    model = torch.nn.DataParallel(model, device_ids=[0, 1], output_device=0)
+    model = DataParallel(model, device_ids=[0], output_device=0)
     model = model.to(device)
     Cox_loss = coxph_loss()
     Cox_loss = Cox_loss.to(device)

@@ -1,11 +1,8 @@
 # -*- coding: utf-8 -*-
 
-import os
-import sys
 import argparse
 from train import Train
 from analyze import Analyze
-import torch
 
 
 def Parser_main():

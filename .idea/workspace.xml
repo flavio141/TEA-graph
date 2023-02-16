@@ -5,24 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e085b5ad-d859-408b-8e80-9318060eb085" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/paths.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/TEA-graph.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/TEA-graph.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sample_data_for_demo/Already_Analysed/TCGA-A3-3306-01A-01-BS1.ef6c8f90-9706-49b4-b268-299f64d4ad79.svs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sample_data_for_demo/Already_Analysed/TCGA-A3-3308-01A-01-TS1.a0d81fc1-9d20-4f75-a4b4-c9657b8f45ed.svs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sample_data_for_demo/Graph_test/TCGA/KIRC/original/TCGA-A3-3306-01A-01-BS1_feature_list.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sample_data_for_demo/Graph_test/TCGA/KIRC/original/TCGA-A3-3306-01A-01-BS1_node_dict.pkl" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sample_data_for_demo/Graph_test/TCGA/KIRC/original/TCGA-A3-3306-01A-01-BS1_node_location_list.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sample_data_for_demo/Graph_test/TCGA/KIRC/original/TCGA-A3-3308-01A-01-TS1_feature_list.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sample_data_for_demo/Graph_test/TCGA/KIRC/original/TCGA-A3-3308-01A-01-TS1_node_dict.pkl" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sample_data_for_demo/Graph_test/TCGA/KIRC/original/TCGA-A3-3308-01A-01-TS1_node_location_list.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sample_data_for_demo/Graph_test/TCGA/KIRC/superpatch/TCGA-A3-3306-01A-01-BS1_0.75.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sample_data_for_demo/Graph_test/TCGA/KIRC/superpatch/TCGA-A3-3306-01A-01-BS1_0.75_graph_torch.pt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sample_data_for_demo/Graph_test/TCGA/KIRC/superpatch/TCGA-A3-3308-01A-01-TS1_0.75.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sample_data_for_demo/Graph_test/TCGA/KIRC/superpatch/TCGA-A3-3308-01A-01-TS1_0.75_graph_torch.pt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sample_data_for_demo/Graphdata/KIRC/TCGA-A3-3324-01Z-00-DX1_0_4.3_artifact_sophis_final.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sample_data_for_demo/Graphdata/KIRC/TCGA-A3-3324-01Z-00-DX1_0_graph_torch_4.3_artifact_sophis_final.pt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sample_data_for_demo/Graphdata/KIRC/TCGA-A3-3324-01Z-00-DX1_node_location_list.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sample_data_for_demo/Metadata/KIRC_clinical.tsv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.yaml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/train.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils.py" afterDir="false" />
     </list>
@@ -44,31 +32,35 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectId" id="2LSTCx9iIoSPr3pobaHCO2CbuvE" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_MARK_IGNORED_FILES_AS_EXCLUDED": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "/home/flavio-141/Documenti/PhD/Melanoma_Research/TEA-graph/Sample_data_for_demo/Graphdata/KIRC",
-    "settings.editor.selected.configurable": "project.propVCSSupport.CommitDialog"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_MARK_IGNORED_FILES_AS_EXCLUDED&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/fsartori/Documents/TEA-graph/Sample_data_for_demo/Raw_WSI&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\fsartori\Documents\TEA-graph\Sample_data_for_demo\Raw_WSI" />
       <recent name="$PROJECT_DIR$/Sample_data_for_demo/Graphdata/KIRC" />
       <recent name="$PROJECT_DIR$/Sample_data_for_demo/Raw_WSI" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\fsartori\Documents\TEA-graph" />
       <recent name="$PROJECT_DIR$/Sample_data_for_demo/Already_Analysed" />
       <recent name="$PROJECT_DIR$/Sample_data_for_demo/Graph_test/TCGA/KIRC/superpatch" />
       <recent name="$PROJECT_DIR$/Sample_data_for_demo/Graphdata/KIRC" />
       <recent name="$PROJECT_DIR$/Sample_data_for_demo/Raw_WSI" />
-      <recent name="$PROJECT_DIR$/Sample_data_for_demo" />
     </key>
   </component>
   <component name="RunManager">
@@ -79,10 +71,9 @@
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
-      <option name="SDK_HOME" value="$PROJECT_DIR$/venv/bin/python" />
-      <option name="SDK_NAME" value="Python 3.8 (TEA-graph)" />
+      <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="false" />
+      <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
@@ -120,5 +111,16 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/train.py</url>
+          <line>180</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

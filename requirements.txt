@@ -82,11 +82,11 @@ yacs==0.1.8
 yaspin==2.1.0
 zipp==3.6.0
 #torch==1.9.1+cu111
-#torch-cluster==1.5.9
-#torch-ema==0.3
-#torch-geometric==1.7.1
-#torch-scatter==2.0.9
-#torch-sparse==0.6.12
-#torch-spline-conv==1.2.1
+#pip install torch-cluster==1.5.9 -f https://data.pyg.org/whl/torch-1.9.1+cu111.html
+torch-ema==0.3
+torch-geometric==1.7.1
+torch-scatter==2.0.9
+torch-sparse==0.6.12
+#pip install torch-spline-conv==1.2.1 -f https://data.pyg.org/whl/torch-1.9.1+cu111.html
 #torchaudio==0.9.1
 #torchvision==0.10.1+cu111

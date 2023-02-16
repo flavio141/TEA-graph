@@ -1,9 +1,13 @@
-Graph deep learning on whole slide image predicts the context-aware prognostic pathological features of renal cell carcinoma
+Graph Deep Learning on WSIs
 =====================
 
-## Dependencies
-* To install the dependencies for this project, see the "requirements.yaml"
-* Tested on Nvidia TESLA V100 x 2 with CUDA 11.1
+## Get Started & Dependencies
+In order to work with this code, we need to install the dependencies.
+### Windows
+1. Microsoft Visual Studio C++ 2015,2017,2019 at this link: https://www.microsoft.com/it-it/Download/confirmation.aspx?id=48145;
+2. Torch with this command in the terminal: pip install torch==1.9.1+cu111 torchvision==0.10.1+cu111 torchaudio==0.9.1 -f https://download.pytorch.org/whl/torch_stable.html;
+3. Run: pip install -r requirements.txt;
+4. Finally run: pip install torch-cluster==1.5.9 -f https://data.pyg.org/whl/torch-1.9.1+cu111.html and after pip install torch-spline-conv==1.2.1 -f https://data.pyg.org/whl/torch-1.9.1+cu111.html.
 
 ## Step 1: Processing whole slide image (WSI) into superpatch-graph
 #### What is the superpatch-graph?

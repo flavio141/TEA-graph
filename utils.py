@@ -249,7 +249,7 @@ def train_test_split(Trainlist, Metadata, DatasetType, TrainRoot, Fi, Analyze_fl
     Trainlist, Train_survivallist, Train_censorlist, Train_stagelist = metadata_list_generation(DatasetType, Trainlist,
                                                                                                 Metadata)
     split_percentage = 0.8
-    fold = 2
+    fold = 3
     Train_not_eventlist = np.where(np.array(Train_censorlist) == 0)[0]
     Train_not_eventlist = [item for c, item in enumerate(Train_not_eventlist)]
     Train_eventlist = np.where(np.array(Train_censorlist) == 1)[0]
@@ -377,11 +377,11 @@ def makecheckpoint_dir_graph(Argument):
     checkpoint_dir = os.path.join('./results/', Argument.DatasetType, Argument.model)
     checkpoint_dir = os.path.join(checkpoint_dir, todaydata)
     if os.path.exists(checkpoint_dir) is False:
-        os.makedirs(checkpoint_dir)
+        os.makedirs(checkpoint_dir.replace(":","-"))
 
     figure_dir = os.path.join(checkpoint_dir, "Figure")
     if os.path.exists(figure_dir) is False:
-        os.mkdir(figure_dir)
+        os.mkdir(figure_dir.replace(":","-"))
 
     return checkpoint_dir, figure_dir
 
