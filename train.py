@@ -138,8 +138,9 @@ def Train(Argument):
     if os.listdir("./Sample_data_for_demo/Graph_test/TCGA/KIRC/superpatch"):
         files = os.listdir("./Sample_data_for_demo/Graph_test/TCGA/KIRC/superpatch")
         for file in files:
-            shutil.move(os.path.join("./Sample_data_for_demo/Graph_test/TCGA/KIRC/superpatch", file),
-                        "./Sample_data_for_demo/Graphdata/KIRC")
+            if not os.path.isfile(os.path.join("./Sample_data_for_demo/Graph_test/TCGA/KIRC/superpatch", file)):
+                shutil.move(os.path.join("./Sample_data_for_demo/Graph_test/TCGA/KIRC/superpatch", file),
+                            "./Sample_data_for_demo/Graphdata/KIRC")
 
     Trainlist = os.listdir(TrainRoot)
     Trainlist = [item for c, item in enumerate(Trainlist) if 'graph_torch' in item]
@@ -174,7 +175,7 @@ def Train(Argument):
     model = model_selection(Argument)
     model_parameter_groups = non_decay_filter(model)
 
-    model = DataParallel(model, device_ids=[0, 1], output_device=0)
+    model = torch.nn.DataParallel(model, device_ids=[0, 1], output_device=0)
     model = model.to(device)
     Cox_loss = coxph_loss()
     Cox_loss = Cox_loss.to(device)

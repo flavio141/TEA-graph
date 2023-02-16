@@ -19,65 +19,65 @@ def weight_init(m):
         model.apply(weight_init)
     '''
     if isinstance(m, nn.Conv1d):
-        init.normal_(m.weight.data)
+        nn.init.normal_(m.weight.data)
         if m.bias is not None:
-            init.normal_(m.bias.data)
+            nn.init.normal_(m.bias.data)
     elif isinstance(m, nn.Conv2d):
-        init.kaiming_normal_(m.weight.data)
+        nn.init.kaiming_normal_(m.weight.data)
         if m.bias is not None:
-            init.normal_(m.bias.data)
+            nn.init.normal_(m.bias.data)
     elif isinstance(m, nn.Conv3d):
-        init.kaiming_normal_(m.weight.data)
+        nn.init.kaiming_normal_(m.weight.data)
         if m.bias is not None:
-            init.normal_(m.bias.data)
+            nn.init.normal_(m.bias.data)
     elif isinstance(m, nn.ConvTranspose1d):
-        init.normal_(m.weight.data)
+        nn.init.normal_(m.weight.data)
         if m.bias is not None:
-            init.normal_(m.bias.data)
+            nn.init.normal_(m.bias.data)
     elif isinstance(m, nn.ConvTranspose2d):
-        init.kaiming_normal_(m.weight.data)
+        nn.init.kaiming_normal_(m.weight.data)
         if m.bias is not None:
-            init.normal_(m.bias.data)
+            nn.init.normal_(m.bias.data)
     elif isinstance(m, nn.ConvTranspose3d):
-        init.kaiming_normal_(m.weight.data)
+        nn.init.kaiming_normal_(m.weight.data)
         if m.bias is not None:
-            init.normal_(m.bias.data)
+            nn.init.normal_(m.bias.data)
     elif isinstance(m, nn.BatchNorm1d):
-        init.normal_(m.weight.data, mean=1, std=0.02)
-        init.constant_(m.bias.data, 0)
+        nn.init.normal_(m.weight.data, mean=1, std=0.02)
+        nn.init.constant_(m.bias.data, 0)
     elif isinstance(m, nn.BatchNorm2d):
-        init.normal_(m.weight.data, mean=1, std=0.02)
-        init.constant_(m.bias.data, 0)
+        nn.init.normal_(m.weight.data, mean=1, std=0.02)
+        nn.init.constant_(m.bias.data, 0)
     elif isinstance(m, nn.BatchNorm3d):
-        init.normal_(m.weight.data, mean=1, std=0.02)
-        init.constant_(m.bias.data, 0)
+        nn.init.normal_(m.weight.data, mean=1, std=0.02)
+        nn.init.constant_(m.bias.data, 0)
     elif isinstance(m, nn.Linear):
-        init.kaiming_normal_(m.weight.data)
-        init.normal_(m.bias.data)
+        nn.init.kaiming_normal_(m.weight.data)
+        nn.init.normal_(m.bias.data)
     elif isinstance(m, nn.LSTM):
         for param in m.parameters():
             if len(param.shape) >= 2:
-                init.orthogonal_(param.data)
+                nn.init.orthogonal_(param.data)
             else:
-                init.normal_(param.data)
+                nn.init.normal_(param.data)
     elif isinstance(m, nn.LSTMCell):
         for param in m.parameters():
             if len(param.shape) >= 2:
-                init.orthogonal_(param.data)
+                nn.init.orthogonal_(param.data)
             else:
-                init.normal_(param.data)
+                nn.init.normal_(param.data)
     elif isinstance(m, nn.GRU):
         for param in m.parameters():
             if len(param.shape) >= 2:
-                init.orthogonal_(param.data)
+                nn.init.orthogonal_(param.data)
             else:
-                init.normal_(param.data)
+                nn.init.normal_(param.data)
     elif isinstance(m, nn.GRUCell):
         for param in m.parameters():
             if len(param.shape) >= 2:
-                init.orthogonal_(param.data)
+                nn.init.orthogonal_(param.data)
             else:
-                init.normal_(param.data)
+                nn.init.normal_(param.data)
 
 
 def non_decay_filter(model):
@@ -249,6 +249,7 @@ def train_test_split(Trainlist, Metadata, DatasetType, TrainRoot, Fi, Analyze_fl
     Trainlist, Train_survivallist, Train_censorlist, Train_stagelist = metadata_list_generation(DatasetType, Trainlist,
                                                                                                 Metadata)
     split_percentage = 0.8
+    fold = 2
     Train_not_eventlist = np.where(np.array(Train_censorlist) == 0)[0]
     Train_not_eventlist = [item for c, item in enumerate(Train_not_eventlist)]
     Train_eventlist = np.where(np.array(Train_censorlist) == 1)[0]
@@ -301,59 +302,59 @@ def train_test_split(Trainlist, Metadata, DatasetType, TrainRoot, Fi, Analyze_fl
     Testlist = Testlist_noncensor.tolist() + Testlist_censor.tolist()
 
     TrainFF = np.array(
-        Trainlist_noncensor[0:Fi * int(len(Trainlist_noncensor) / 5)] + Trainlist_noncensor[(Fi + 1) * int(
-            len(Trainlist_noncensor) / 5):len(Trainlist_noncensor)] \
-        + Trainlist_censor[0:Fi * int(len(Trainlist_censor) / 5)] + Trainlist_censor[
-                                                                    (Fi + 1) * int(len(Trainlist_censor) / 5):len(
+        Trainlist_noncensor[0:Fi * int(len(Trainlist_noncensor) / fold)] + Trainlist_noncensor[(Fi + 1) * int(
+            len(Trainlist_noncensor) / fold):len(Trainlist_noncensor)] \
+        + Trainlist_censor[0:Fi * int(len(Trainlist_censor) / fold)] + Trainlist_censor[
+                                                                    (Fi + 1) * int(len(Trainlist_censor) / fold):len(
                                                                         Trainlist_censor)])
 
     TrainFF_survivallist = \
-        Train_noncensor_survivallist[0:Fi * int(len(Train_noncensor_survivallist) / 5)] + Train_noncensor_survivallist[
+        Train_noncensor_survivallist[0:Fi * int(len(Train_noncensor_survivallist) / fold)] + Train_noncensor_survivallist[
                                                                                           (Fi + 1) * int(
-                                                                                              len(Train_noncensor_survivallist) / 5):len(
+                                                                                              len(Train_noncensor_survivallist) / fold):len(
                                                                                               Train_noncensor_survivallist)] \
-        + Train_censor_survivallist[0:Fi * int(len(Train_censor_survivallist) / 5)] + Train_censor_survivallist[
+        + Train_censor_survivallist[0:Fi * int(len(Train_censor_survivallist) / fold)] + Train_censor_survivallist[
                                                                                       (Fi + 1) * int(
-                                                                                          len(Train_censor_survivallist) / 5):len(
+                                                                                          len(Train_censor_survivallist) / fold):len(
                                                                                           Train_censor_survivallist)]
 
     TrainFF_stagelist = \
-        Train_noncensor_stagelist[0:Fi * int(len(Train_noncensor_stagelist) / 5)] + Train_noncensor_stagelist[
+        Train_noncensor_stagelist[0:Fi * int(len(Train_noncensor_stagelist) / fold)] + Train_noncensor_stagelist[
                                                                                     (Fi + 1) * int(
-                                                                                        len(Train_noncensor_stagelist) / 5):len(
+                                                                                        len(Train_noncensor_stagelist) / fold):len(
                                                                                         Train_noncensor_stagelist)] \
-        + Train_censor_stagelist[0:Fi * int(len(Train_censor_stagelist) / 5)] + Train_censor_stagelist[(Fi + 1) * int(
-            len(Train_censor_stagelist) / 5):len(Train_censor_stagelist)]
+        + Train_censor_stagelist[0:Fi * int(len(Train_censor_stagelist) / fold)] + Train_censor_stagelist[(Fi + 1) * int(
+            len(Train_censor_stagelist) / fold):len(Train_censor_stagelist)]
 
     TrainFF_censorlist = \
-        Train_noncensor_censorlist[0:Fi * int(len(Train_noncensor_censorlist) / 5)] + Train_noncensor_censorlist[
+        Train_noncensor_censorlist[0:Fi * int(len(Train_noncensor_censorlist) / fold)] + Train_noncensor_censorlist[
                                                                                       (Fi + 1) * int(
-                                                                                          len(Train_noncensor_censorlist) / 5):len(
+                                                                                          len(Train_noncensor_censorlist) / fold):len(
                                                                                           Train_noncensor_censorlist)] \
-        + Train_censor_censorlist[0:Fi * int(len(Train_censor_censorlist) / 5)] + Train_censor_censorlist[
+        + Train_censor_censorlist[0:Fi * int(len(Train_censor_censorlist) / fold)] + Train_censor_censorlist[
                                                                                   (Fi + 1) * int(
-                                                                                      len(Train_censor_censorlist) / 5):len(
+                                                                                      len(Train_censor_censorlist) / fold):len(
                                                                                       Train_censor_censorlist)]
 
     ValidFF = np.array(
-        Trainlist_noncensor[Fi * int(len(Trainlist_noncensor) / 5):(Fi + 1) * int(len(Trainlist_noncensor) / 5)]
-        + Trainlist_censor[Fi * int(len(Trainlist_censor) / 5):(Fi + 1) * int(len(Trainlist_censor) / 5)])
+        Trainlist_noncensor[Fi * int(len(Trainlist_noncensor) / fold):(Fi + 1) * int(len(Trainlist_noncensor) / fold)]
+        + Trainlist_censor[Fi * int(len(Trainlist_censor) / fold):(Fi + 1) * int(len(Trainlist_censor) / fold)])
 
-    ValidFF_survivallist = Train_noncensor_survivallist[Fi * int(len(Train_noncensor_survivallist) / 5):(Fi + 1) * int(
-        len(Train_noncensor_survivallist) / 5)] \
-                           + Train_censor_survivallist[Fi * int(len(Train_censor_survivallist) / 5):(Fi + 1) * int(
-        len(Train_censor_survivallist) / 5)]
+    ValidFF_survivallist = Train_noncensor_survivallist[Fi * int(len(Train_noncensor_survivallist) / fold):(Fi + 1) * int(
+        len(Train_noncensor_survivallist) / fold)] \
+                           + Train_censor_survivallist[Fi * int(len(Train_censor_survivallist) / fold):(Fi + 1) * int(
+        len(Train_censor_survivallist) / fold)]
 
     ValidFF_stagelist = Train_noncensor_stagelist[
-                        Fi * int(len(Train_noncensor_stagelist) / 5):(Fi + 1) * int(len(Train_noncensor_stagelist) / 5)] \
+                        Fi * int(len(Train_noncensor_stagelist) / fold):(Fi + 1) * int(len(Train_noncensor_stagelist) / fold)] \
                         + Train_censor_stagelist[
-                          Fi * int(len(Train_censor_stagelist) / 5):(Fi + 1) * int(len(Train_censor_stagelist) / 5)]
+                          Fi * int(len(Train_censor_stagelist) / fold):(Fi + 1) * int(len(Train_censor_stagelist) / fold)]
 
     ValidFF_censorlist = Train_noncensor_censorlist[
-                         Fi * int(len(Train_noncensor_censorlist) / 5):(Fi + 1) * int(
-                             len(Train_noncensor_censorlist) / 5)] \
+                         Fi * int(len(Train_noncensor_censorlist) / fold):(Fi + 1) * int(
+                             len(Train_noncensor_censorlist) / fold)] \
                          + Train_censor_censorlist[
-                           Fi * int(len(Train_censor_censorlist) / 5):(Fi + 1) * int(len(Train_censor_censorlist) / 5)]
+                           Fi * int(len(Train_censor_censorlist) / fold):(Fi + 1) * int(len(Train_censor_censorlist) / fold)]
 
     TrainFF_set = (TrainFF, TrainFF_survivallist, TrainFF_censorlist, TrainFF_stagelist)
     ValidFF_set = (ValidFF, ValidFF_survivallist, ValidFF_censorlist, ValidFF_stagelist)
